@@ -1,31 +1,52 @@
 import log from "electron-log/main";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
+import path from "node:path";
 
 import type { Config } from "./types/config";
 
 import { getPinCode, tokenDance, validateToken } from "./auth";
-import { ClientIDKey, CONFIG_PATH, PLEX_PRODUCT, ProductKey, TokenKey } from "./contants";
+import { ClientIDKey, PLEX_PRODUCT, ProductKey, TokenKey } from "./contants";
 
 let config!: Config;
+let configPath: string = "./plexicord.json";
+
+export async function setPath() {
+  try {
+    await fs.access(path.join(process.resourcesPath, "plexicord.json"), fs.constants.W_OK);
+    configPath = path.join(process.resourcesPath, "plexicord.json");
+  }
+  catch {
+    ;
+  }
+}
 
 async function readConfig(): Promise<Config> {
   try {
-    const fileText = await fs.readFile(CONFIG_PATH, { encoding: "utf-8" });
+    const fileText = await fs.readFile(configPath, { encoding: "utf-8" });
     return JSON.parse(fileText) as Config;
   }
   catch (error) {
-    throw new Error(`Failed to read or parse JSON file at ${CONFIG_PATH}: ${error}`);
+    throw new Error(`Failed to read or parse JSON file at ${configPath}: ${error}`);
   }
 };
 
 async function writeConfig(): Promise<void> {
+  let configPath = "./plexicord.json";
+  try {
+    await fs.access(path.join(process.resourcesPath, "plexicord.json"), fs.constants.W_OK);
+    configPath = path.join(process.resourcesPath, "plexicord.json");
+  }
+  catch {
+    ;
+  }
+
   try {
     const fileText = JSON.stringify(config, null, 2); // Pretty-print with 2 spaces
-    await fs.writeFile(CONFIG_PATH, fileText, { encoding: "utf-8" });
+    await fs.writeFile(configPath, fileText, { encoding: "utf-8" });
   }
   catch (error) {
-    throw new Error(`Failed to write JSON file at ${CONFIG_PATH}: ${error}`);
+    throw new Error(`Failed to write JSON file at ${configPath}: ${error}`);
   }
 };
 

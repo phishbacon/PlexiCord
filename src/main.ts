@@ -13,8 +13,9 @@ import * as plex from "./lib/plex";
 log.initialize();
 
 log.debug(process.argv);
+config.setPath();
 
-const isDebug = process.argv.findIndex(arg => arg === "--debug" || arg === "-d");
+const isDebug = process.argv.findIndex(arg => (arg === "--debug" || arg === "-d")) > 0;
 
 log.transports.file.level = isDebug ? "debug" : "info";
 log.transports.console.level = isDebug ? "debug" : "info";

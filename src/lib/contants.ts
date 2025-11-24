@@ -1,5 +1,4 @@
 export const PLEX_PRODUCT = "PlexiCord";
-export const CONFIG_PATH = "./plexicord.json";
 export const PLEX_API_BASE_URL = "https://plex.tv/api/v2";
 export const USER_ENDPOINT = `${PLEX_API_BASE_URL}/user`;
 export const PIN_ENDPOINT = `${PLEX_API_BASE_URL}/pins`;
