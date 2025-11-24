@@ -14,7 +14,7 @@ log.initialize();
 
 log.debug(process.argv);
 
-const isDebug = process.argv.findIndex(arg => arg === "--debug" || "-d");
+const isDebug = process.argv.findIndex(arg => arg === "--debug" || arg === "-d");
 
 log.transports.file.level = isDebug ? "debug" : "info";
 log.transports.console.level = isDebug ? "debug" : "info";

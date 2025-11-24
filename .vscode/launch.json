@@ -11,6 +11,7 @@
       },
       // runtimeArgs will be passed directly to your Electron application
       "runtimeArgs": [
+        "-d"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
