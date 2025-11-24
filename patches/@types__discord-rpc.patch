@@ -1,0 +1,12 @@
+diff --git a/index.d.ts b/index.d.ts
+index 04480d88d0cd2e21f8a7e2ef9878d6984b14fff5..106c4636b70e7967fb300dac1b934eb93e8e2477 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -449,6 +449,7 @@ export interface VoiceSettings {
+ }
+ 
+ export interface Presence {
++    type?: number | undefined;
+     /**
+      * The user's current party status
+      */

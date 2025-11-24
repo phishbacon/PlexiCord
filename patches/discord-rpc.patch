@@ -1,0 +1,12 @@
+diff --git a/src/client.js b/src/client.js
+index 0ff29daa9ac1cd4f406944b3e195738d520b2c57..2fb5d3876c247c63b370b791e65679e808854c97 100644
+--- a/src/client.js
++++ b/src/client.js
+@@ -520,6 +520,7 @@ class RPCClient extends EventEmitter {
+       activity: {
+         state: args.state,
+         details: args.details,
++        type: args.type,
+         timestamps,
+         assets,
+         party,
