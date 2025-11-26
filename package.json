@@ -17,18 +17,23 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "commit": "cz",
+    "prepare": "husky"
   },
   "dependencies": {
     "@types/discord-rpc": "^4.0.10",
     "daisyui": "^5.5.5",
     "discord-rpc": "^4.0.1",
     "electron-log": "^5.4.3",
+    "plexicord": "link:",
     "utf-8-validate": "^6.0.5",
     "vue": "^3.5.24"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@electron-forge/cli": "^7.10.2",
     "@electron-forge/maker-deb": "^7.10.2",
     "@electron-forge/maker-dmg": "^7.10.2",
@@ -45,10 +50,13 @@
     "@typescript-eslint/parser": "^8.46.4",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/devtools": "^8.0.5",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "electron": "39.2.0",
     "electron-squirrel-startup": "^1.0.1",
     "eslint": "^9.39.1",
     "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
     "tailwindcss": "^4.1.17",
     "typescript": "~5.9.3",
     "vite": "^7.2.2"
@@ -70,5 +78,10 @@
       "bufferutil",
       "utf-8-validate"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
