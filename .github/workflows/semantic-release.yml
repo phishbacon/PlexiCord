@@ -35,9 +35,9 @@ jobs:
         with:
           version: latest
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-        
+      - name: Install semantic-release dependencies
+        run: pnpm install semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/exec
+
       - name: Check if prerelease
         id: check-prerelease
         run: |
@@ -53,6 +53,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
 
+      - name: Debug outputs
+        run: |
+          echo "new-release-published: ${{ steps.release.outputs.new-release-published }}"
+          echo "new-release-version: ${{ steps.release.outputs.new-release-version }}"
+          echo "is-prerelease: ${{ steps.check-prerelease.outputs.is-prerelease }}"
+
   publish:
     needs: semantic-release
     if: needs.semantic-release.outputs.new-release-published == 'true'
@@ -64,7 +70,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: v${{ needs.semantic-release.outputs.new-release-version }}
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+      
+      - name: Pull latest from remote
+        run: git pull origin ${{ github.ref_name }}
+      
+      - name: Debug - Check package.json version
+        run: |
+          echo "Current commit: $(git rev-parse HEAD)"
+          echo "package.json version: $(node -p "require('./package.json').version")"
+          echo "Expected version: ${{ needs.semantic-release.outputs.new-release-version }}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -73,9 +94,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        
+
       - name: Publish Electron app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IS_PRERELEASE: ${{ needs.semantic-release.outputs.is-prerelease }}
-        run: pnpm run publish 
+        run: pnpm run publish
