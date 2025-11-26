@@ -14,6 +14,12 @@ export default {
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     [
+      "@semantic-release/npm",
+      {
+        npmPublish: false, // Don't publish to npm, just update package.json
+      },
+    ],
+    [
       "@semantic-release/exec",
       {
         // eslint-disable-next-line no-template-curly-in-string

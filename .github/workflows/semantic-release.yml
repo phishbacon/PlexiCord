@@ -52,12 +52,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
 
-      - name: Debug outputs
-        run: |
-          echo "new-release-published: ${{ steps.release.outputs.new-release-published }}"
-          echo "new-release-version: ${{ steps.release.outputs.new-release-version }}"
-          echo "is-prerelease: ${{ steps.check-prerelease.outputs.is-prerelease }}"
-
   publish:
     needs: semantic-release
     if: needs.semantic-release.outputs.new-release-published == 'true'
@@ -92,8 +86,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Publish Electron app
+      - name: Build Electron app
+        run: pnpm run make
+      
+      - name: Upload artifacts to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IS_PRERELEASE: ${{ needs.semantic-release.outputs.is-prerelease }}
-        run: pnpm run publish
+        run: |
+          gh release upload v${{ needs.semantic-release.outputs.new-release-version }} \
+            out/make/**/*.exe \
+            out/make/**/*.zip \
+            out/make/**/*.dmg
