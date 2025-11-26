@@ -1,0 +1,30 @@
+name: ESLint
+
+on:
+  pull_request:
+    branches:
+      - main
+      - alpha
+  push:
+    branches:
+      - main
+      - alpha
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      
+      - name: Install ESLint
+        run: |
+          npm install eslint --ignore-scripts
+
+      - name: Run ESLint
+        run: npx eslint . --config eslint.config.mjs

@@ -6,6 +6,7 @@ import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { VitePlugin } from "@electron-forge/plugin-vite";
+import { PublisherGithub } from "@electron-forge/publisher-github";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 
 const config: ForgeConfig = {
@@ -28,6 +29,16 @@ const config: ForgeConfig = {
       },
     }),
     new MakerZIP({}, ["darwin", "win32", "linux"]),
+  ],
+  publishers: [
+    new PublisherGithub({
+      repository: {
+        owner: "phishbacon",
+        name: "PlexiCord",
+      },
+      // eslint-disable-next-line node/no-process-env
+      prerelease: process.env.IS_PRERELEASE === "true",
+    }),
   ],
   plugins: [
     new VitePlugin({
