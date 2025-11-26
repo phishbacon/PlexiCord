@@ -1,7 +1,7 @@
 {
   "name": "plexicord",
   "productName": "PlexiCord",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Discord Rich Presence for Plexamp",
   "author": {
     "name": "phishbacon",
