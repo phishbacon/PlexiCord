@@ -20,12 +20,12 @@ export default {
         successCmd: "echo \"new-release-published=true\" >> $GITHUB_OUTPUT && echo \"new-release-version=${nextRelease.version}\" >> $GITHUB_OUTPUT",
       },
     ],
+    "@semantic-release/git",
     [
       "@semantic-release/github",
       {
         assets: [],
       },
     ],
-    "@semantic-release/git",
   ],
 };
