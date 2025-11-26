@@ -92,6 +92,7 @@ jobs:
       - name: Upload artifacts to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
         run: |
           find out/make -type f \( -name "*.exe" -o -name "*.zip" -o -name "*.dmg" \) \
             -exec gh release upload v${{ needs.semantic-release.outputs.new-release-version }} {} +

@@ -19,8 +19,11 @@ A crossplatform app for Discord Rich Presence integration with Plexamp
 </div>
 <div align="center">
   <a href="https://www.daisyui.com/">
-    <img src="https://img.daisyui.com/images/daisyui/horizontal-dark.svg#gh-light-mode-only" width="450"/>
-    <img src="https://img.daisyui.com/images/daisyui/horizontal-light.svg#gh-dark-mode-only" width="450"/>
+    <picture width="450">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.daisyui.com/images/daisyui/horizontal-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://img.daisyui.com/images/daisyui/horizontal-light.svg">
+      <img src="https://img.daisyui.com/images/daisyui/horizontal-dark.svg">
+    </picture>
   </a>
 </div>
 
@@ -31,19 +34,28 @@ Please check out [Dyvinia's PlexampRPC](https://github.com/Dyvinia/PlexampRPC) a
 ## Features
 
 - Authenticate with Plex
-  <img src="showcase/plex-auth.png" style="border-radius: 1rem"/>
+
+  <img src="showcase/plex-auth.png" style="border-radius: 15px"/>
+
   PlexiCord remembers you auth token and checks its validity everytime it starts up
+
 - Select any of your owned servers to look for sessions (I plan to add support for non owned servers, in fact I think it's as easy as changing a filter in [plex.ts](src/lib/plex.ts#L25) perhaps you should submit a pull request!)
-  <img src="showcase/server-select.png" style="border-radius: 1rem"/>
+
+  <img src="showcase/server-select.png" style="border-radius: 15px"/>
+
 - Connect locally or remotely
-  <img src="showcase/connection-select.png" style="border-radius: 1rem"/>
+
+  <img src="showcase/connection-select.png" style="border-radius: 15px"/>
+
 - Show off them tunes!
+
   <div style="display: flex; align-items: flex-start;">
-    <img src="showcase/music-player.png" style="border-radius: 1rem"/>
-    <img src="showcase/discord-player.png" style="border-radius: 1rem"/>
+    <img src="showcase/music-player.png" style="border-radius: 15px"/>
+    <img src="showcase/discord-player.png" style="border-radius: 15px"/>
   </div>
+
 - PlexiCord minimizes to your system tray (right click close to exit the application)
-  <img src="showcase/system-tray.png" style="border-radius: .5rem"/>
+  <img src="showcase/system-tray.png" style="border-radius: 5px"/>
 
 ## Installation
 
