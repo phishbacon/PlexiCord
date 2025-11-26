@@ -58,11 +58,17 @@
       "electron",
       "electron-winstaller",
       "esbuild",
+      "fs-xattr",
+      "macos-alias",
       "register-scheme"
     ],
     "patchedDependencies": {
       "@types/discord-rpc": "patches/@types__discord-rpc.patch",
       "discord-rpc": "patches/discord-rpc.patch"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "bufferutil",
+      "utf-8-validate"
+    ]
   }
 }

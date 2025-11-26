@@ -19,8 +19,14 @@ const config: ForgeConfig = {
     new MakerSquirrel({
       setupIcon: "./src/assets/icon.ico",
     }),
-    new MakerDMG({}),
-    new MakerDeb({}),
+    new MakerDMG({
+      icon: "./src/assets/icon.icns",
+    }),
+    new MakerDeb({
+      options: {
+        icon: "./src/assets/icon.png",
+      },
+    }),
     new MakerZIP({}, ["darwin", "win32", "linux"]),
   ],
   plugins: [

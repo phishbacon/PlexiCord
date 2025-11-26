@@ -1,9 +1,8 @@
 import type { NativeImage } from "electron";
 
-import { app, BrowserWindow, Menu, nativeImage, Tray } from "electron";
+import { app, BrowserWindow, Menu, Tray } from "electron";
 import log from "electron-log/main";
 import started from "electron-squirrel-startup";
-import fs from "node:fs/promises";
 import path from "node:path";
 
 import * as auth from "./lib/auth";
@@ -12,39 +11,13 @@ import { MAIN_WINDOW_HEIGHT, MAIN_WINDOW_WIDTH } from "./lib/contants";
 import * as discord from "./lib/discord";
 import { registerHandlers } from "./lib/handle";
 import * as plex from "./lib/plex";
+import { getIcon } from "./lib/util";
 
 let isQuitting = false;
-let icon!: NativeImage;
 let isDebug!: boolean;
-
-async function getIcon() {
-  let ext;
-  switch (process.platform) {
-    case "darwin":
-      ext = "icns";
-      break;
-    case "win32":
-      ext = "ico";
-      break;
-    default:
-      ext = "png";
-      break;
-  }
-  const prodPath = path.join(process.resourcesPath, "assets", `icon.${ext}`);
-  const devPath = path.join(app.getAppPath(), "src", "assets", `icon.${ext}`);
-
-  let finalPath = devPath;
-
-  try {
-    await fs.access(prodPath);
-    finalPath = prodPath;
-  }
-  catch {
-    // stays devPath
-  }
-
-  icon = nativeImage.createFromPath(finalPath);
-}
+let windowIcon!: NativeImage;
+let trayIcon!: NativeImage;
+let dockIcon!: NativeImage;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -64,9 +37,13 @@ function createWindow(): BrowserWindow {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
     },
-    icon,
+    icon: windowIcon,
   });
   mainWindow.setMenu(null);
+
+  if (process.platform === "darwin") {
+    app.dock?.setIcon(dockIcon);
+  }
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -97,8 +74,8 @@ function createWindow(): BrowserWindow {
   return mainWindow;
 }
 
-function createTray(mainWindow: BrowserWindow): Tray {
-  const tray = new Tray(icon);
+async function createTray(mainWindow: BrowserWindow): Promise<Tray> {
+  const tray = new Tray(trayIcon);
   const contextMenu = Menu.buildFromTemplate([
     {
       label: "Show PlexiCord",
@@ -154,7 +131,9 @@ app.on("ready", async () => {
   registerHandlers("plex", plex);
   registerHandlers("discord", discord);
 
-  await getIcon();
+  windowIcon = await getIcon("window");
+  trayIcon = await getIcon("tray");
+  dockIcon = await getIcon("dock");
 
   const mainWindow = createWindow();
   createTray(mainWindow);
