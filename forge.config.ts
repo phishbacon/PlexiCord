@@ -28,7 +28,7 @@ const config: ForgeConfig = {
         icon: "./src/assets/icon.png",
       },
     }),
-    new MakerZIP({}, ["darwin", "win32", "linux"]),
+    new MakerZIP({}, ["win32", "linux"]),
   ],
   publishers: [
     new PublisherGithub({

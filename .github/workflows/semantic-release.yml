@@ -93,7 +93,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Find and upload all artifacts, using -not -path to skip nupkg and RELEASES
           find out/make -type f \( -name "*.exe" -o -name "*.zip" -o -name "*.dmg" \) \
-            -not -path "*/squirrel.windows/*" \
             -exec gh release upload v${{ needs.semantic-release.outputs.new-release-version }} {} +
