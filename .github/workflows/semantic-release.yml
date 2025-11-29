@@ -35,7 +35,7 @@ jobs:
           version: latest
 
       - name: Install semantic-release dependencies
-        run: pnpm install semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/exec
+        run: pnpm add semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/exec
 
       - name: Check if prerelease
         id: check-prerelease
