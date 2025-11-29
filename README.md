@@ -98,6 +98,8 @@ pnpm start
 
 and you should be up and running. Remember not to commit your ```plexicord.json``` file. It will have you auth token in it!
 
+To keep commits nice, tidy and meaningful, I've added a commit msg hook for commit message linting with commitlint. PlexiCord follows the [conventional config](https://github.com/conventional-changelog/commitlint/#what-is-commitlint). Run ```pnpm husky``` before committing, and if your commit message isn't up to snuff, commitlint will tell you why. If you're unsure of how to make your commit message follow the config, run ```pnpm commit``` and commitizen will help you compose a commit message in the correct format.
+
 Feel free to open an issue or request a feature!
 
 ## Future features (maybe)

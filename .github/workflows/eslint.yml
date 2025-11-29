@@ -1,4 +1,4 @@
-name: ESLint
+name: Lint
 
 on:
   pull_request:
@@ -10,8 +10,11 @@ on:
       - main
       - alpha
 
+permissions:
+  contents: read
+
 jobs:
-  lint:
+  eslint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,3 +31,31 @@ jobs:
 
       - name: Run ESLint
         run: npx eslint . --config eslint.config.mjs
+    
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install commitlint
+        run: npm install -D @commitlint/cli @commitlint/config-conventional
+      - name: Print versions
+        run: |
+          git --version
+          node --version
+          npm --version
+          npx commitlint --version
+
+      - name: Validate current commit (last commit) with commitlint
+        if: github.event_name == 'push'
+        run: npx commitlint --last --verbose
+
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
