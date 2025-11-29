@@ -42,7 +42,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: npm
+          cache: pnpm
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -53,7 +53,7 @@ jobs:
         run: |
           git --version
           node --version
-          npm --version
+          pnpm --version
           npx commitlint --version
 
       - name: Validate current commit (last commit) with commitlint
